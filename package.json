@@ -1,0 +1,23 @@
+{
+  "name": "the-new-hire",
+  "version": "1.0.0",
+  "description": "An AI operations teammate that lives in your team chat, connects to your tools, and runs content, reporting and pipeline work for any small business.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/index.mjs",
+    "check": "node --env-file-if-exists=.env src/index.mjs --check",
+    "test": "node --test \"test/*.test.mjs\"",
+    "token:gmail": "node --env-file-if-exists=.env scripts/get-gmail-token.mjs",
+    "token:outlook": "node --env-file-if-exists=.env scripts/get-outlook-token.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
+    "discord.js": "^14.27.0",
+    "node-cron": "^4.6.0"
+  },
+  "license": "MIT"
+}
