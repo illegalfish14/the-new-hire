@@ -1,0 +1,103 @@
+{
+  "org": {
+    "name": "Northwind Coffee",
+    "description": "An independent coffee roaster selling beans and subscriptions online and to local cafés.",
+    "website": "https://northwind.example",
+    "timezone": "Europe/London"
+  },
+
+  "voice": {
+    "summary": "Warm, knowledgeable and unpretentious, like a barista who really knows their stuff.",
+    "rules": [
+      "Specifics over adjectives: \"roasted 48 hours ago\" beats \"incredibly fresh\"",
+      "Plain English, short sentences",
+      "Teach something in every post, sell second"
+    ],
+    "avoid": ["leverage", "synergy", "game-changer", "unlock"]
+  },
+
+  "team": {
+    "inbox": "team@northwind.example"
+  },
+
+  "models": {
+    "default": "claude-opus-5",
+    "effort": { "chat": "low", "longform": "high" }
+  },
+
+  "chat": {
+    "channels": {
+      "content": "marketing",
+      "alerts": "ops"
+    }
+  },
+
+  "databases": {
+    "content_insights": {
+      "env": "NOTION_CONTENT_INSIGHTS_DB",
+      "description": "Weekly social performance analysis: top/bottom posts, what worked, recommendations"
+    },
+    "weekly_updates": {
+      "env": "NOTION_WEEKLY_UPDATES_DB",
+      "description": "What shipped or changed this week, written up for customers"
+    },
+    "content_briefs": {
+      "env": "NOTION_CONTENT_BRIEFS_DB",
+      "description": "Long-form article briefs. Status: Brief Ready → In Progress → Ready to Publish → Published"
+    },
+    "social_drafts": {
+      "env": "NOTION_SOCIAL_DRAFTS_DB",
+      "description": "One entry per week with a draft per platform. Status: Draft Ready → Posted"
+    },
+    "pipeline": {
+      "env": "NOTION_PIPELINE_DB",
+      "description": "Sales / partnership pipeline. Status: New → Contacted → Follow Up → Replied → Won / Lost. Has a 'Last Contact' date."
+    },
+    "channel_memory": {
+      "env": "NOTION_CHANNEL_MEMORY_DB",
+      "description": "Daily per-channel chat summaries (Channel, Date, Day, Summary)"
+    }
+  },
+
+  "agents": {
+    "analyst": {
+      "enabled": true,
+      "platforms": ["Instagram", "LinkedIn", "Facebook"]
+    },
+    "writer": {
+      "enabled": true,
+      "wordCount": "1,200–1,800",
+      "categories": [
+        "Brewing guides",
+        "Origin stories & sourcing",
+        "Behind the roastery",
+        "Subscriptions & gifting"
+      ]
+    },
+    "social": {
+      "enabled": true,
+      "platforms": {
+        "Instagram": "Caption of 80–150 words. Hook in the first line, 3–5 relevant hashtags at the end.",
+        "LinkedIn": "150–300 words. One-line hook, 3–5 short paragraphs, end with a question.",
+        "Facebook": "100–200 words. Warm, conversational, end with a question or CTA."
+      }
+    },
+    "pipeline": {
+      "enabled": true,
+      "label": "wholesale leads"
+    },
+    "digest": {
+      "enabled": true
+    },
+    "memory": {
+      "enabled": true,
+      "retentionDays": 7
+    }
+  },
+
+  "schedule": [
+    { "cron": "0 17 * * *", "job": "memory.summarise", "description": "Summarise every channel into long-term memory" },
+    { "cron": "0 9 * * 1", "job": "digest.post", "description": "Monday morning digest in the content channel" },
+    { "cron": "0 16 * * 5", "job": "writer.proposeBrief", "description": "Friday brief proposal, posted for approval" }
+  ]
+}

@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.*
+!.env.example
+config/org.json
+*.db
+*.db-*
+*.pid
+.DS_Store
